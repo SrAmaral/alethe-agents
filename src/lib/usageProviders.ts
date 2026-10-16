@@ -1,4 +1,9 @@
-import type { BuiltinAgentType, Preferences, UsageProviderId } from './types'
+import {
+  AGENT_TYPE_LABELS,
+  type BuiltinAgentType,
+  type Preferences,
+  type UsageProviderId,
+} from './types'
 
 /**
  * Usage/subscription providers surfaced in the AI usage details modal, the home usage
@@ -8,18 +13,26 @@ import type { BuiltinAgentType, Preferences, UsageProviderId } from './types'
  */
 export interface UsageProviderDef {
   id: UsageProviderId
-  agentType: BuiltinAgentType
+  /** The agent this provider meters; absent for a service that is not an agent (OpenRouter). */
+  agentType?: BuiltinAgentType
+  /** Display name; a proper name, never translated. */
+  label: string
+  /** What a usage read uses: an installed CLI's sign-in, or keys saved in the keychain. */
+  credential: 'signin' | 'key'
   /** Company whose service a usage read contacts; a proper name, never translated. */
   vendor: string
   /** Preferences key controlling the usage panel card (modal + home strip). */
   usagePrefKey: keyof Pick<
     Preferences,
-    'usageShowClaude' | 'usageShowCodex' | 'usageShowAntigravity'
+    'usageShowClaude' | 'usageShowCodex' | 'usageShowAntigravity' | 'usageShowOpenRouter'
   >
   /** Preferences key controlling the topbar pill. */
   topbarPrefKey: keyof Pick<
     Preferences,
-    'topbarShowClaudeUsage' | 'topbarShowCodexUsage' | 'topbarShowAntigravityUsage'
+    | 'topbarShowClaudeUsage'
+    | 'topbarShowCodexUsage'
+    | 'topbarShowAntigravityUsage'
+    | 'topbarShowOpenRouterUsage'
   >
 }
 
@@ -27,6 +40,8 @@ export const USAGE_PROVIDERS: UsageProviderDef[] = [
   {
     id: 'claude',
     agentType: 'claude',
+    label: AGENT_TYPE_LABELS.claude,
+    credential: 'signin',
     vendor: 'Anthropic',
     usagePrefKey: 'usageShowClaude',
     topbarPrefKey: 'topbarShowClaudeUsage',
@@ -34,6 +49,8 @@ export const USAGE_PROVIDERS: UsageProviderDef[] = [
   {
     id: 'codex',
     agentType: 'codex',
+    label: AGENT_TYPE_LABELS.codex,
+    credential: 'signin',
     vendor: 'OpenAI',
     usagePrefKey: 'usageShowCodex',
     topbarPrefKey: 'topbarShowCodexUsage',
@@ -41,8 +58,18 @@ export const USAGE_PROVIDERS: UsageProviderDef[] = [
   {
     id: 'antigravity',
     agentType: 'antigravity',
+    label: AGENT_TYPE_LABELS.antigravity,
+    credential: 'signin',
     vendor: 'Google',
     usagePrefKey: 'usageShowAntigravity',
     topbarPrefKey: 'topbarShowAntigravityUsage',
+  },
+  {
+    id: 'openrouter',
+    label: 'OpenRouter',
+    credential: 'key',
+    vendor: 'OpenRouter',
+    usagePrefKey: 'usageShowOpenRouter',
+    topbarPrefKey: 'topbarShowOpenRouterUsage',
   },
 ]

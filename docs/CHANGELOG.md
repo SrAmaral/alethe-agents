@@ -12,6 +12,15 @@ Notable user-facing changes to **Alethe** are documented here. The format is bas
 
 ### Added
 
+- **OpenRouter credit usage.** OpenRouter joins the AI usage panel, the topbar and the usage
+  reading switches (off until turned on). With the OpenRouter API key from voice it shows that
+  key's spend today, this week and this month, its limit and the budget that blocks it first. An
+  optional management key, checked with OpenRouter and kept in the system keychain, adds the
+  account balance (credits bought, used and left), 30-day activity and the most expensive models.
+  The card leads with the percentage used of the tightest cap and estimates how many days the
+  balance lasts at the last week's pace; the topbar pill shows the dollars left. Alethe warns once
+  at 80% used or 3 days left, again at 95% or 1 day left, and when the balance is used up, with a
+  system notification while the window is in the background.
 - **Voice conversation with every agent.** Voice now talks to any agent Alethe runs in a pane —
   Codex, OpenCode, Cursor, Kiro, Kimi, Grok, the other built-ins and custom agents — not only
   Claude Code. The session picker lists them all with the agent's name. Claude Code keeps its full

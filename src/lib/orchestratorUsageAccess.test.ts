@@ -19,7 +19,12 @@ describe('enableOrchestratorFeature', () => {
     enableOrchestratorFeature()
 
     expect(preferences().enabledFeatures.orchestrator).toBe(true)
-    expect(preferences().usageAccess).toEqual({ claude: true, codex: true, antigravity: false })
+    expect(preferences().usageAccess).toEqual({
+      claude: true,
+      codex: true,
+      antigravity: false,
+      openrouter: false,
+    })
     const [toast] = useUiStore.getState().toasts
     expect(toast.body).toContain('Claude Code, Codex')
   })

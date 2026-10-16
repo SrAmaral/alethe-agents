@@ -4,12 +4,12 @@ import { UsageStrip } from '../HomeView/UsageStrip'
 import { getCachedAntigravityUsage } from '../../lib/antigravityUsageCache'
 import { loadClaudeUsage } from '../../lib/claudeUsageCache'
 import { getCachedCodexUsage } from '../../lib/codexUsageCache'
+import { getCachedOpenRouterUsage } from '../../lib/openrouterUsageCache'
 import { useT } from '../../lib/i18n'
-import { AGENT_TYPE_LABELS } from '../../lib/types'
 import { USAGE_PROVIDERS } from '../../lib/usageProviders'
 import { useProjectsStore } from '../../stores/projectsStore'
 import { useUiStore } from '../../stores/uiStore'
-import { AgentIcon } from '../icons/AgentIcons'
+import { UsageProviderIcon } from '../icons/UsageProviderIcon'
 import { Modal } from './Modal'
 import styles from './AiUsageModal.module.css'
 
@@ -46,8 +46,8 @@ function UsageVisibilityEditor() {
         return (
           <div key={provider.id} className={styles.customizeRow}>
             <span className={styles.customizeName}>
-              <AgentIcon type={provider.agentType} size={16} theme={preferences.uiTheme} />
-              {AGENT_TYPE_LABELS[provider.agentType]}
+              <UsageProviderIcon provider={provider} size={16} theme={preferences.uiTheme} />
+              {provider.label}
             </span>
             <VisibilitySwitch
               checked={usageOn}
@@ -70,9 +70,11 @@ export function AiUsageModal() {
   const closeModal = useUiStore((state) => state.closeModal)
   const setCodexUsage = useUiStore((state) => state.setCodexUsage)
   const setAntigravityUsage = useUiStore((state) => state.setAntigravityUsage)
+  const setOpenRouterUsage = useUiStore((state) => state.setOpenRouterUsage)
   const claudeAccess = useProjectsStore((state) => state.preferences.usageAccess.claude)
   const codexAccess = useProjectsStore((state) => state.preferences.usageAccess.codex)
   const antigravityAccess = useProjectsStore((state) => state.preferences.usageAccess.antigravity)
+  const openrouterAccess = useProjectsStore((state) => state.preferences.usageAccess.openrouter)
   const preferences = useProjectsStore((state) => state.preferences)
   const [editing, setEditing] = useState(false)
 
@@ -101,10 +103,25 @@ export function AiUsageModal() {
         () => !cancelled && setAntigravityUsage(null),
       )
     }
+    if (openrouterAccess) {
+      void getCachedOpenRouterUsage(true).then(
+        (usage) => !cancelled && setOpenRouterUsage(usage),
+        () => !cancelled && setOpenRouterUsage(null),
+      )
+    }
     return () => {
       cancelled = true
     }
-  }, [open, claudeAccess, codexAccess, antigravityAccess, setAntigravityUsage, setCodexUsage])
+  }, [
+    open,
+    claudeAccess,
+    codexAccess,
+    antigravityAccess,
+    openrouterAccess,
+    setAntigravityUsage,
+    setCodexUsage,
+    setOpenRouterUsage,
+  ])
 
   return (
     <Modal

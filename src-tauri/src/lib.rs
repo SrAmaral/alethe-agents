@@ -50,6 +50,7 @@ mod merge_analyzer;
 mod opencode_bridge;
 mod opencode_gsd_plugin;
 mod opencode_sessions;
+mod openrouter_usage;
 pub mod orchestrator;
 pub mod orchestrator_core;
 mod orchestrator_shell_host;
@@ -553,6 +554,9 @@ pub fn run() {
             codex_usage::get_codex_usage,
             codex_usage::consume_codex_reset_credit,
             antigravity_usage::get_antigravity_usage,
+            openrouter_usage::get_openrouter_usage,
+            openrouter_usage::openrouter_set_management_key,
+            openrouter_usage::openrouter_delete_management_key,
             agent_cost::get_session_cost,
             agent_cost::get_transcript_cost,
             agent_cost::get_model_pricing,

@@ -14,6 +14,7 @@ import type {
   ClaudeUsage,
   CodexUsage,
   MemoryStats,
+  OpenRouterUsage,
   RuntimeSnapshot,
 } from '../lib/tauri'
 import type { AgentType } from '../lib/types'
@@ -100,6 +101,7 @@ type UiState = {
   claudeUsageError: 'no_token' | 'unavailable' | null
   codexUsage: CodexUsage | null
   antigravityUsage: AntigravityUsage | null
+  openrouterUsage: OpenRouterUsage | null
 
   focusedTerminalId: string | null
   /**
@@ -171,6 +173,7 @@ type UiState = {
   setClaudeUsageError: (value: 'no_token' | 'unavailable' | null) => void
   setCodexUsage: (value: CodexUsage | null) => void
   setAntigravityUsage: (value: AntigravityUsage | null) => void
+  setOpenRouterUsage: (value: OpenRouterUsage | null) => void
   setFocusedTerminal: (id: string | null) => void
   requestPaneFocus: (terminalId: string) => void
   setActiveTerminal: (projectId: string, terminalId: string) => void
@@ -224,6 +227,7 @@ export const useUiStore = create<UiState>((set) => ({
   claudeUsageError: null,
   codexUsage: null,
   antigravityUsage: null,
+  openrouterUsage: null,
   focusedTerminalId: null,
   keptAlivePaneIds: [],
   mountedPaneIds: [],
@@ -279,6 +283,7 @@ export const useUiStore = create<UiState>((set) => ({
   setClaudeUsageError: (value) => set({ claudeUsageError: value }),
   setCodexUsage: (value) => set({ codexUsage: value }),
   setAntigravityUsage: (value) => set({ antigravityUsage: value }),
+  setOpenRouterUsage: (value) => set({ openrouterUsage: value }),
   setFocusedTerminal: (id) => set({ focusedTerminalId: id }),
   requestPaneFocus: (terminalId) => set({ focusRequest: { terminalId, ts: Date.now() } }),
   setActiveTerminal: (projectId, terminalId) => set({ activeTerminal: { projectId, terminalId } }),

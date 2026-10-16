@@ -60,6 +60,7 @@ import { useCliOpenRequests } from './hooks/useCliOpenRequests'
 import { useCloseConfirmation } from './hooks/useCloseConfirmation'
 import { useDiscordPresence } from './hooks/useDiscordPresence'
 import { useKeybindings } from './hooks/useKeybindings'
+import { useOpenRouterUsage } from './hooks/useOpenRouterUsage'
 import { useOrchestrationSettingsSync } from './hooks/useOrchestrationSettingsSync'
 import { useRemoteControlService } from './hooks/useRemoteControlService'
 import { useResourceSupervisor } from './hooks/useResourceSupervisor'
@@ -217,6 +218,7 @@ export default function App() {
   useAgentHookBridge()
   useSpeechEngineDefault(hydrated, activeProfileId)
   useVoiceFallbackToasts()
+  useOpenRouterUsage()
   useAgentsSidebarAutoOpen()
   useCliOpenRequests(hydrated)
 

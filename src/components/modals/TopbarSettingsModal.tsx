@@ -1,4 +1,4 @@
-import { Check, Cloud, MemoryStick, UserRound, Waypoints } from 'lucide-react'
+import { Check, Cloud, MemoryStick, Route, UserRound, Waypoints } from 'lucide-react'
 
 import { useT } from '../../lib/i18n'
 import type { Preferences } from '../../lib/types'
@@ -13,6 +13,7 @@ type ToggleKey = keyof Pick<
   | 'topbarShowClaudeUsage'
   | 'topbarShowCodexUsage'
   | 'topbarShowAntigravityUsage'
+  | 'topbarShowOpenRouterUsage'
   | 'topbarShowSync'
   | 'topbarShowProfile'
   | 'topbarShowMemory'
@@ -40,6 +41,11 @@ export function TopbarSettingsModal() {
       key: 'topbarShowAntigravityUsage',
       label: t('ui.titlebar.itemAntigravity'),
       icon: <AntigravityIcon size={18} />,
+    },
+    {
+      key: 'topbarShowOpenRouterUsage',
+      label: t('ui.titlebar.itemOpenRouter'),
+      icon: <Route size={18} />,
     },
     { key: 'topbarShowSync', label: t('ui.titlebar.itemSync'), icon: <Cloud size={18} /> },
     {
